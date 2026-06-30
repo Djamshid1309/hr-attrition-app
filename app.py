@@ -12,7 +12,7 @@ from sklearn.metrics import (classification_report, confusion_matrix,
 # Настройки страницы
 st.set_page_config(
     page_title='HR Attrition Predictor',
-    page_icon='▣',
+    page_icon='🔮',
     layout='wide'
 )
 

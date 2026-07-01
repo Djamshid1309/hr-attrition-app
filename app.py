@@ -9,9 +9,7 @@ import os
 from sklearn.metrics import (classification_report, confusion_matrix,
                               roc_auc_score, roc_curve)
 
-# ─────────────────────────────────────────────
-# ПЕРЕВОДЫ
-# ─────────────────────────────────────────────
+
 TEXTS = {
     'RU': {
         # Навигация
@@ -262,12 +260,10 @@ POSITIONS = {
     'Продажи':      ['Менеджер продаж', 'Старший менеджер', 'KAM', 'Директор продаж']
 }
 
-# ─────────────────────────────────────────────
-# НАСТРОЙКИ СТРАНИЦЫ
-# ─────────────────────────────────────────────
+
 st.set_page_config(
     page_title='HR Attrition Predictor',
-    page_icon='▣',
+    page_icon='🔮',
     layout='wide'
 )
 
@@ -276,9 +272,7 @@ BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, 'model')
 DATA_DIR  = os.path.join(BASE_DIR, 'data')
 
-# ─────────────────────────────────────────────
-# ЗАГРУЗКА МОДЕЛИ
-# ─────────────────────────────────────────────
+
 @st.cache_resource
 def load_model():
     model         = joblib.load(os.path.join(MODEL_DIR, 'attrition_model.pkl'))
@@ -323,9 +317,7 @@ def load_company_data():
     df['risk_score'] = model.predict_proba(feat_df)[:, 1]
     return df
 
-# ─────────────────────────────────────────────
-# SIDEBAR — ЯЗЫК + НАВИГАЦИЯ
-# ─────────────────────────────────────────────
+
 if 'lang' not in st.session_state:
     st.session_state.lang = 'RU'
 if 'page' not in st.session_state:
@@ -374,9 +366,7 @@ if st.sidebar.button(T['nav_metrics'], width='stretch',
 
 page = st.session_state.page
 
-# ─────────────────────────────────────────────
-# СТРАНИЦА — HR показатели / HR Dashboard
-# ─────────────────────────────────────────────
+
 if page == 'hr':
     st.title(T['hr_title'])
     st.markdown(T['hr_subtitle'])
@@ -462,9 +452,7 @@ if page == 'hr':
                                  T['col_risk'], T['col_level'], T['col_enps'], T['col_perf']]
     st.dataframe(top_risk_display.reset_index(drop=True), width='stretch')
 
-# ─────────────────────────────────────────────
-# СТРАНИЦА — Анализ сотрудника / Employee Analysis
-# ─────────────────────────────────────────────
+
 elif page == 'analyze':
     st.title(T['analyze_title'])
     st.markdown(T['analyze_subtitle'])
@@ -593,9 +581,7 @@ elif page == 'analyze':
         plt.close()
         st.caption(T['shap_caption'])
 
-# ─────────────────────────────────────────────
-# СТРАНИЦА — Метрики / Metrics
-# ─────────────────────────────────────────────
+
 elif page == 'metrics':
     st.title(T['metrics_title'])
 
@@ -674,9 +660,7 @@ elif page == 'metrics':
     df_report = pd.DataFrame(report).transpose().round(3)
     st.dataframe(df_report, width='stretch')
 
-# ─────────────────────────────────────────────
-# СТРАНИЦА — Загрузка CSV / Upload CSV
-# ─────────────────────────────────────────────
+
 elif page == 'csv':
     st.title(T['csv_title'])
     st.markdown(T['csv_subtitle'])

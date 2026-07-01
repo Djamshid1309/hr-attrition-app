@@ -331,11 +331,20 @@ if 'lang' not in st.session_state:
 if 'page' not in st.session_state:
     st.session_state.page = 'hr'
 
-lang = st.sidebar.radio('🌐', ['RU', 'EN'], horizontal=True,
-                         index=0 if st.session_state.lang == 'RU' else 1)
-if lang != st.session_state.lang:
-    st.session_state.lang = lang
+lang = st.session_state.lang
+
+# Переключатель языка — две кнопки рядом
+lang_col1, lang_col2 = st.sidebar.columns(2)
+if lang_col1.button('RU', width='stretch',
+                     type='primary' if lang == 'RU' else 'secondary'):
+    st.session_state.lang = 'RU'
     st.rerun()
+if lang_col2.button('EN', width='stretch',
+                     type='primary' if lang == 'EN' else 'secondary'):
+    st.session_state.lang = 'EN'
+    st.rerun()
+
+st.sidebar.markdown('---')
 
 T = TEXTS[lang]
 
